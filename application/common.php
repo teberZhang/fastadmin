@@ -300,3 +300,20 @@ if (!function_exists('var_export_short')) {
     }
 
 }
+
+if (!function_exists('println')) {
+    /**
+     * @ atuhor     : Lynn
+     * @ function   : formmat the print_r to debug the array conveniently
+     **/
+    function println($data, $offset=true){
+        if(empty($data)){
+            echo '<pre>返回数据为空！</pre>';
+        }else{
+            echo '<pre>'; print_r($data); echo '</pre>';
+        }
+        if($offset){
+            die;
+        }
+    }
+}
