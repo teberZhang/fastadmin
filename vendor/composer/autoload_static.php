@@ -50,6 +50,7 @@ class ComposerStaticInitd15e2bd93c7f83bfccc320b8bde0c0e9
         array (
             'Overtrue\\Socialite\\' => 19,
             'Overtrue\\Pinyin\\' => 16,
+            'OSS\\' => 4,
         ),
         'M' => 
         array (
@@ -143,6 +144,10 @@ class ComposerStaticInitd15e2bd93c7f83bfccc320b8bde0c0e9
         'Overtrue\\Pinyin\\' => 
         array (
             0 => __DIR__ . '/..' . '/overtrue/pinyin/src',
+        ),
+        'OSS\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/aliyuncs/oss-sdk-php/src/OSS',
         ),
         'Monolog\\' => 
         array (
