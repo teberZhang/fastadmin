@@ -26,7 +26,8 @@
         "overtrue/pinyin": "~3.0",
         "phpoffice/phpexcel": "^1.8",
         "mongodb/mongodb": "^1.4",
-	"jpush/jpush": "^3.5"
+	"jpush/jpush": "^3.5",
+	"php-amqplib/php-amqplib": ">=2.6.1"
     },
     "config": {
         "preferred-install": "dist"
