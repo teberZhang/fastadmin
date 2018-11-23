@@ -3,10 +3,12 @@
 namespace app\index\controller;
 
 use app\common\controller\Frontend;
+use think\Db;
 use app\common\library\Token;
 use think\cache\driver\Redis;
 use MongoDb\Driver\Manager;
 use MongoDb\Collection;
+use app\common\library\RabbitPublisher;
 
 class Index extends Frontend
 {
@@ -42,9 +44,23 @@ class Index extends Frontend
         echo $redis->get("test");
     }
 
-    public function mongo()
+    //生产者
+    public function send()
     {
-        //
+        $merchantData = [
+            'id' => rand(10,10000),
+        ];
+        //入MQ
+        $rabbitPublisher = new RabbitPublisher();
+        $rabbitPublisher->taskMerchant($merchantData);
+    }
+
+    //消费者
+    public function receive()
+    {
+        //Mq消费
+        $rabbitPublisher = new RabbitPublisher();
+        $rabbitPublisher->workerMerchant();
     }
 
 }
