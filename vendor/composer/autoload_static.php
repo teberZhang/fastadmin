@@ -44,6 +44,7 @@ class ComposerStaticInitd15e2bd93c7f83bfccc320b8bde0c0e9
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
             'Psr\\Container\\' => 14,
+            'PhpAmqpLib\\' => 11,
         ),
         'O' => 
         array (
@@ -54,6 +55,10 @@ class ComposerStaticInitd15e2bd93c7f83bfccc320b8bde0c0e9
         array (
             'Monolog\\' => 8,
             'MongoDB\\' => 8,
+        ),
+        'J' => 
+        array (
+            'JPush\\' => 6,
         ),
         'G' => 
         array (
@@ -127,6 +132,10 @@ class ComposerStaticInitd15e2bd93c7f83bfccc320b8bde0c0e9
         array (
             0 => __DIR__ . '/..' . '/psr/container/src',
         ),
+        'PhpAmqpLib\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/php-amqplib/php-amqplib/PhpAmqpLib',
+        ),
         'Overtrue\\Socialite\\' => 
         array (
             0 => __DIR__ . '/..' . '/overtrue/socialite/src',
@@ -142,6 +151,10 @@ class ComposerStaticInitd15e2bd93c7f83bfccc320b8bde0c0e9
         'MongoDB\\' => 
         array (
             0 => __DIR__ . '/..' . '/mongodb/mongodb/src',
+        ),
+        'JPush\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/jpush/jpush/src/JPush',
         ),
         'GuzzleHttp\\Psr7\\' => 
         array (
