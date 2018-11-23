@@ -276,4 +276,11 @@ return [
         //API接口地址
         'api_url'             => 'https://api.fastadmin.net',
     ],
+    //RabbitMQ
+    'rabbitmq'=>[
+        'host'=>'127.0.0.1',
+        'port'=>5672,
+        'username'=>'guest',
+        'password'=>'guest',
+    ],
 ];
