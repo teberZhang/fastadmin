@@ -22,6 +22,7 @@ return array(
     'PhpAmqpLib\\' => array($vendorDir . '/php-amqplib/php-amqplib/PhpAmqpLib'),
     'Overtrue\\Socialite\\' => array($vendorDir . '/overtrue/socialite/src'),
     'Overtrue\\Pinyin\\' => array($vendorDir . '/overtrue/pinyin/src'),
+    'OSS\\' => array($vendorDir . '/aliyuncs/oss-sdk-php/src/OSS'),
     'Monolog\\' => array($vendorDir . '/monolog/monolog/src/Monolog'),
     'MongoDB\\' => array($vendorDir . '/mongodb/mongodb/src'),
     'JPush\\' => array($vendorDir . '/jpush/jpush/src/JPush'),
