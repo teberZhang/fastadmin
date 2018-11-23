@@ -285,7 +285,7 @@ return [
     ],
     //jpush极光推送设置
     'jpush'                   => [
-        'app_key' => 'c41d92ef0015a018e62bf158',
-        'master_secret' => '7b8e29a1db8bdb7722025f87',
+        'app_key' => '',
+        'master_secret' => '',
     ],
 ];
