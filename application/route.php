@@ -16,6 +16,7 @@ Route::group('index', [
     '/send'    => 'index/Index/send',
     '/receive' => 'index/Index/receive',
     '/callFunc' => 'index/Index/callFunc',
+    '/test'    => 'index/Index/test',
 ]);
 return [
     //别名配置,别名只能是映射到控制器且访问时必须加上请求的方法
