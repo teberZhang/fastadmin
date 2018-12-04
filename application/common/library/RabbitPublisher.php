@@ -17,16 +17,13 @@ class RabbitPublisher
      */
     public function taskMerchant($orderItem=[])
     {
-        $expiredMinute = 30; //订单过期时间（分钟）
         $rabbitmq = Config('rabbitmq');
         $connection = new AMQPStreamConnection($rabbitmq['host'],$rabbitmq['port'],$rabbitmq['username'],$rabbitmq['password']);
         $channel = $connection->channel();
-        //$expiration = $expiredMinute*60*1000; //ttl生存期毫秒数
-        $expiration = 5000;
+        $expiration = 6000;
         $cache_exchange_name = 'cache_exchange'.$expiration;
         $cache_queue_name = 'cache_queue'.$expiration;
-        $keyMark = 'merchantC2c'; //c2c-mq标识
-        $channel->exchange_declare('delay_exchange'.$keyMark, 'direct',false,false,false);
+        $channel->exchange_declare('delay_exchange', 'direct',false,false,false);
         $channel->exchange_declare($cache_exchange_name, 'direct',false,false,false);
         $tale = new AMQPTable();
         $tale->set('x-dead-letter-exchange', 'delay_exchange');
@@ -34,8 +31,8 @@ class RabbitPublisher
         $tale->set('x-message-ttl',$expiration);
         $channel->queue_declare($cache_queue_name,false,true,false,false,false,$tale);
         $channel->queue_bind($cache_queue_name, $cache_exchange_name,'');
-        $channel->queue_declare($keyMark.'_queue',false,true,false,false,false);
-        $channel->queue_bind($keyMark.'_queue', 'delay_exchange'.$keyMark,'delay_exchange'.$keyMark);
+        $channel->queue_declare('delay_queue',false,true,false,false,false);
+        $channel->queue_bind('delay_queue', 'delay_exchange','delay_exchange');
         $msg = new AMQPMessage(json_encode($orderItem),array(
             'delivery_mode' => AMQPMessage::DELIVERY_MODE_PERSISTENT,
         ));
@@ -56,18 +53,15 @@ class RabbitPublisher
         $rabbitmq = Config('rabbitmq');
         $connection = new AMQPStreamConnection($rabbitmq['host'],$rabbitmq['port'],$rabbitmq['username'],$rabbitmq['password']);
         $channel = $connection->channel();
-        $keyMark = 'merchantC2c'; //c2c-mq标识
-        $channel->exchange_declare('delay_exchange'.$keyMark, 'direct',false,false,false);
-        $channel->exchange_declare('cache_exchange'.$keyMark, 'direct',false,false,false);
-        $channel->queue_declare($keyMark.'_queue',false,true,false,false,false);
-        $channel->queue_bind($keyMark.'_queue', 'delay_exchange'.$keyMark,'delay_exchange'.$keyMark);
-
+        $channel->exchange_declare('delay_exchange', 'direct',false,false,false);
+        $channel->exchange_declare('cache_exchange', 'direct',false,false,false);
+        $channel->queue_declare('delay_queue',false,true,false,false,false);
+        $channel->queue_bind('delay_queue', 'delay_exchange','delay_exchange');
         echo ' [*] Waiting for message. To exit press CTRL+C '.PHP_EOL;
-
         //只有consumer已经处理并确认了上一条message时queue才分派新的message给它
-        $channel->basic_qos(null, 1, null);
         $receiver = new self();
-        $channel->basic_consume($keyMark.'_queue','',false,false,false,false,[$receiver,'callMerchant']);
+        $channel->basic_qos(null, 1, null);
+        $channel->basic_consume('delay_queue','',false,false,false,false,[$receiver,'callMerchant']);
         while (count($channel->callbacks)) {
             $channel->wait();
         }
@@ -86,11 +80,11 @@ class RabbitPublisher
         $content = json_decode($msg->body,true);
         $nowDate = date("Y-m-d H:i:s",time());
         //把用户信息插入数据库
-        Db::name('rabbitmq')->insert([
+        /*Db::name('rabbitmq')->insert([
             'username'=>'a'.$content['id'],
             'phone'=>'138'.$content['id'],
             'date' => $nowDate
-        ]);
+        ]);*/
         echo date('Y-m-d H:i:s')." [x] Received",$content['id'],PHP_EOL;
         $msg->delivery_info['channel']->basic_ack($msg->delivery_info['delivery_tag']); //不加这句会中断
     }
